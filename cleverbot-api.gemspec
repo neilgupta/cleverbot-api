@@ -10,4 +10,6 @@ Gem::Specification.new do |s|
   s.files       = %w(
     lib/cleverbot-api.rb
   )
+
+  s.add_dependency 'rest-client'
 end

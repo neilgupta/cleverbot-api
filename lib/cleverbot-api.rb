@@ -1,9 +1,9 @@
-require 'net/http'
+require 'rest-client'
 require 'digest/md5'
 
 class CleverBot
   def initialize
-    @service_uri = URI.parse 'http://www.cleverbot.com/webservicemin'
+    @service_uri = 'http://www.cleverbot.com/webservicemin'
     @post_params = {
       start: 'y',
       icognoid: 'wsf',
@@ -12,9 +12,6 @@ class CleverBot
       islearning: '1',
       cleanslate: 'false'
     }
-    @http = Net::HTTP.new @service_uri.host, @service_uri.port
-    @http.read_timeout = nil
-    @http.open_timeout = nil
     @backlog = []
   end
 
@@ -40,7 +37,7 @@ class CleverBot
 
   def make_request
     query_string = build_query
-    result = @http.post @service_uri.path, query_string
+    result = RestClient.post @service_uri, query_string
     return result.body.split "\r"
   end
 
